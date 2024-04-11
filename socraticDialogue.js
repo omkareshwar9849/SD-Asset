@@ -536,12 +536,28 @@ class SocraticDialogue {
                     $('<input>', { class: 'form-control', type:'file', id })
                 )
             },
+            question: function(question,id){
+                id = id || $that.unique();
+
+                return this.create('mb-3').append(
+                    $('<lable>', { class: 'form-label', for: id }).text('Enter question'),
+                    $('<input>', { class: 'form-control', id }).val(question)
+                )
+            },
+            quetionBlock(questions=[]){
+                
+                return questions.map(element => {
+                    console.log(element.question,element.id);
+                    return this.question(element.question,element.id);
+                });
+                
+            },
             paragraphBlock(params = {}) {
-                console.log(params);
                 return this.create().append(
                     this.create('col').append(
                         this.inputTitle(params.title, params.id),
-                        this.inputImage( params.id)
+                        this.inputImage( params.id),
+                        this.quetionBlock(params.questions)
                     )
                 )
             }
