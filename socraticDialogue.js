@@ -189,11 +189,11 @@ class SocraticDialogue {
         }
     }
 
-     /**
-     * @function log
-     * @description Logs the data to the console
-     * @param {String} log 
-     */
+    /**
+    * @function log
+    * @description Logs the data to the console
+    * @param {String} log 
+    */
     log(log) {
         !this.log || console.log(log);
     }
@@ -220,17 +220,17 @@ class SocraticDialogue {
             return false;
         }
 
-        let {questionParagraphs} = this.with || {};
+        let { questionParagraphs } = this.with || {};
         return (!!questionParagraphs || !!Array.isArray(questionParagraphs) || !!questionParagraphs.length);
     }
 
     handleParagraphEndEvent() {
         const $target = this.$builder;
-        const {currentParagraphId} = this;
-        const {questionParagraphs} = this.with || {};
+        const { currentParagraphId } = this;
+        const { questionParagraphs } = this.with || {};
 
-        let currentParagraph = questionParagraphs.find(para =>  para.id === currentParagraphId);
-        let {questions} = currentParagraph;
+        let currentParagraph = questionParagraphs.find(para => para.id === currentParagraphId);
+        let { questions } = currentParagraph;
 
         let lastQuestion = questions[questions.length - 1];
         let reactionArea = $target.find(`[data-reaction-card="${currentParagraph.id}"]`);
@@ -285,12 +285,12 @@ class SocraticDialogue {
         this.navigateSection('next');
     }
 
-    navigateQuestionWithData(type='next') {
+    navigateQuestionWithData(type = 'next') {
         const $that = this;
         const $target = this.$builder;
-        let {currentQuestionId, currentParagraphId} = this;
-        let {questionParagraphs} = this.with || {};
-        let currentQuestion = null, currentQuestionIndex = -1, forceNext=false;
+        let { currentQuestionId, currentParagraphId } = this;
+        let { questionParagraphs } = this.with || {};
+        let currentQuestion = null, currentQuestionIndex = -1, forceNext = false;
 
         if (type == 'force-next') {
             type = 'next';
@@ -313,17 +313,17 @@ class SocraticDialogue {
         }
 
         if (currentQuestion && Object.keys(currentQuestion).length) {
-            let {id} = currentQuestion;
+            let { id } = currentQuestion;
             let requiredQuestion = null;
             requiredQuestion = currentParagraph.questions[$that.resolveIndexByAction(type, currentQuestionIndex, 1)];
-            
+
             if (requiredQuestion) {
                 $that.currentQuestionId = requiredQuestion.id;
                 $that.currentParagraphId = currentParagraph.id;
 
                 $target.find('#' + id).attr('style', null);
                 $target.find('#' + requiredQuestion.id).attr('style', null).css($that.activeQuestionStyles);
-            
+
             } else {
                 if (type == 'next' && !forceNext) {
                     let reflection = $target.find(`[data-reflection-area="${currentParagraph.id}"] textarea`).val();
@@ -348,7 +348,7 @@ class SocraticDialogue {
                 }
 
                 let questionsLength = type == 'prev' ? requiredParagraph.questions.length : -1;
-                
+
                 requiredQuestion = requiredParagraph.questions[$that.resolveIndexByAction(type, questionsLength, 1)];
                 if (!requiredQuestion) {
                     return;
@@ -388,41 +388,41 @@ class SocraticDialogue {
                     this.create('col-12 text-center').append($('<h4>').text(text))
                 )
             },
-            image: function(url, id) {
+            image: function (url, id) {
                 if (!url) return;
                 return this.create('d-flex d-none justify-content-center mx-0').attr('data-paragraph-image', id).append(
-                    this.create('col-auto').append($('<img>').css({height: '200px', borderRadius: '10px'}).attr('src', url))
+                    this.create('col-auto').append($('<img>').css({ height: '200px', borderRadius: '10px' }).attr('src', url))
                 );
             },
-            question: function(data) {
+            question: function (data) {
                 let styles = {};
                 if (data.isActive) {
                     styles = $that.activeQuestionStyles;
                     $that.currentQuestionId = data.id;
                 }
 
-                return $('<span>', {id: data.id, class: 'mr-1'}).attr({
+                return $('<span>', { id: data.id, class: 'mr-1' }).attr({
                     'data-paragraph-id': data.paragraphId,
                     'data-question-id': data.id,
                 }).css(styles).text(data.question);
             },
-            navigationIcon: function(params, action='prev') {
-                let icon = 'arrow-' + (action ===  'prev' ? 'up' : 'down');
+            navigationIcon: function (params, action = 'prev') {
+                let icon = 'arrow-' + (action === 'prev' ? 'up' : 'down');
                 let classes = action == 'prev' ? '' : ' justify-content-end';
 
                 return this.create("row", '', 'mx-0 my-3' + classes).append(
-                  this.create('d-flex p-2').css({height: '35px', width: '35px', borderRadius: '100%', backgroundColor: '#E7EFFF'}).append(
-                    $('<i>', { class: 'fa fa-' + icon }).attr({
-                        'data-paragraph-id': params.id,
-                        'data-arrow': '',
-                        'data-arrow-action': action
-                      }).css({cursor: 'pointer'})
-                  )
+                    this.create('d-flex p-2').css({ height: '35px', width: '35px', borderRadius: '100%', backgroundColor: '#E7EFFF' }).append(
+                        $('<i>', { class: 'fa fa-' + icon }).attr({
+                            'data-paragraph-id': params.id,
+                            'data-arrow': '',
+                            'data-arrow-action': action
+                        }).css({ cursor: 'pointer' })
+                    )
                 );
             },
-            insightIcons: function (spotterReactions, paragraphId, selected=false) {
+            insightIcons: function (spotterReactions, paragraphId, selected = false) {
                 let reactionElements = spotterReactions.map((reaction, i) => (
-                    $('<button>', {class: 'bg-transparent p-1 border-0'}).attr({
+                    $('<button>', { class: 'bg-transparent p-1 border-0' }).attr({
                         'data-value': reaction.value,
                         'data-name': reaction.name,
                         'data-icon': reaction.icon,
@@ -430,62 +430,62 @@ class SocraticDialogue {
                         'data-description': reaction.description,
                         'data-paragraph-id': paragraphId,
                     }).append(this.create('btn-inner d-flex flex-column justify-content-center align-items-center' + (!i ? 'btn-primary' : 'btn-light'))
-                        .css({borderRadius: '100%', height: '100px', width: '100px'})
-                        .append(this.create().text(reaction.icon).css({fontSize: 'x-large', marginTop: '-8px'}), 
-                        this.create().text(reaction.name).css({fontSize: 'x-small'})))
+                        .css({ borderRadius: '100%', height: '100px', width: '100px' })
+                        .append(this.create().text(reaction.icon).css({ fontSize: 'x-large', marginTop: '-8px' }),
+                            this.create().text(reaction.name).css({ fontSize: 'x-small' })))
                 ));
 
-                return this.create('col-7 row justify-content-center mx-0 mb-4').css({borderRadius: '32px'}).append(reactionElements);
+                return this.create('col-7 row justify-content-center mx-0 mb-4').css({ borderRadius: '32px' }).append(reactionElements);
             },
             insightDescription: function (reaction) {
                 $that.insightIconValue = reaction.value;
 
-                return this.create('border h-100 mx-0').css({borderRadius: '20px'}).append(
+                return this.create('border h-100 mx-0').css({ borderRadius: '20px' }).append(
                     this.create('col pt-2 pb-3 px-0 text-center border-bottom').append(
-                        this.create().text(reaction.icon).css({fontSize: '110px'}), 
+                        this.create().text(reaction.icon).css({ fontSize: '110px' }),
                         this.create('font-weight-500').text(reaction.name)
                     ),
-                    this.create('col p-4 my-auto').append(reaction.description).css({fontSize: 'smaller'}),
+                    this.create('col p-4 my-auto').append(reaction.description).css({ fontSize: 'smaller' }),
                 );
             },
             insightSpotter: function (params) {
                 let { id } = params; // Paragraph object
-                let {spotterReactions} = $that;
+                let { spotterReactions } = $that;
                 let firstReaction = spotterReactions[0];
-                let btnStyles = {width: '120px', borderRadius: '20px', fontSize: 'small', fontWeight: '500'};
+                let btnStyles = { width: '120px', borderRadius: '20px', fontSize: 'small', fontWeight: '500' };
 
-                return this.create('w-100 bg-white position-absolute').attr({'data-reflection-area': id}).css({top: 0, display: 'none', left: 0, overflow: "auto"}).append(
+                return this.create('w-100 bg-white position-absolute').attr({ 'data-reflection-area': id }).css({ top: 0, display: 'none', left: 0, overflow: "auto" }).append(
                     this.create('row').append(
                         this.insightIcons(spotterReactions, id),
                         this.create('col-5 mb-4').attr('insight-description', id).append(this.insightDescription(firstReaction))
                     ),
                     this.create('row mx-0 mb-4').append(
                         this.create('col-10').append(
-                            $('<textarea>', {rows: 3, class: 'w-100 p-2 mr-2', placeholder: 'Write your insight here...'}).css({borderRadius: '10px', height: '100px', resize: 'none', fontSize: 'small'})
+                            $('<textarea>', { rows: 3, class: 'w-100 p-2 mr-2', placeholder: 'Write your insight here...' }).css({ borderRadius: '10px', height: '100px', resize: 'none', fontSize: 'small' })
                         ),
-                        this.create('col-2 p-0 px-0 d-flex border').css({height: '100px', borderRadius: '10px'}).append(
-                            $('<button>', {class: 'border-0 btn mx-auto p-0 w-100 btn-outline-primary reactions'}).css({height: '100px'}).attr({
+                        this.create('col-2 p-0 px-0 d-flex border').css({ height: '100px', borderRadius: '10px' }).append(
+                            $('<button>', { class: 'border-0 btn mx-auto p-0 w-100 btn-outline-primary reactions' }).css({ height: '100px' }).attr({
                                 'data-paragraph-id': id,
                                 'data-arrow': '',
                                 'data-arrow-action': 'force-next',
                             }).append(
                                 this.create('').append(
-                                    $('<img>').css({height: '75px'})
-                                    .attr('src', 'https://media.giphy.com/media/SqYhwWASzIrjjq07u8/giphy.gif?cid=790b7611q8h8bdz3606mg25v0tps5dm0mur4lqema4rov9ch&ep=v1_stickers_search&rid=giphy.gif&ct=e'),
-                                    this.create('font-weight-500').css({fontSize: 'medium'}).text('Pass')
+                                    $('<img>').css({ height: '75px' })
+                                        .attr('src', 'https://media.giphy.com/media/SqYhwWASzIrjjq07u8/giphy.gif?cid=790b7611q8h8bdz3606mg25v0tps5dm0mur4lqema4rov9ch&ep=v1_stickers_search&rid=giphy.gif&ct=e'),
+                                    this.create('font-weight-500').css({ fontSize: 'medium' }).text('Pass')
                                 )
                             )
                         )
                     ),
-                    this.create('row mx-0').attr({'data-ref-nav': id}).append(
-                        this.create('hidden-elem row mx-0 pr-0 col justify-content-between').css({display: 'none'}).append(
-                            $('<button>', {class: 'btn btn-secondary'}).css(btnStyles).attr({
+                    this.create('row mx-0').attr({ 'data-ref-nav': id }).append(
+                        this.create('hidden-elem row mx-0 pr-0 col justify-content-between').css({ display: 'none' }).append(
+                            $('<button>', { class: 'btn btn-secondary' }).css(btnStyles).attr({
                                 'data-paragraph-id': id,
                                 'data-arrow': '',
                                 'data-arrow-action': 'prev',
                                 'data-force-prev': ''
                             }).text('Previous'),
-                            $('<button>', {class: 'px-3 btn btn-primary'}).css(btnStyles).attr({
+                            $('<button>', { class: 'px-3 btn btn-primary' }).css(btnStyles).attr({
                                 'data-paragraph-id': id,
                                 'data-arrow': '',
                                 'data-arrow-action': 'next'
@@ -494,31 +494,56 @@ class SocraticDialogue {
                     )
                 )
             },
-            reactionSection: function(params)  {
-                let {reactionConfig} = $that;
+            reactionSection: function (params) {
+                let { reactionConfig } = $that;
                 let { id } = params;
                 let component = this;
 
                 if (reactionConfig.length) {
                     let iconElements = [];
 
-                    $.each(reactionConfig, function(i, item) {
-                        let {category, icon, requiresReflection} = item;
-                        let elem = $('<button>', {class: 'btn btn-outline-primary border-0 reactions', title: category})
-                        .attr({'data-paragraph-id': id, 'data-requires-reflection': requiresReflection, 'data-insight-category': category})
-                        .append(
-                            component.create().append(
-                                $(icon).css({height: '75px'}),
-                                component.create('font-weight-500').css({fontSize: 'medium'}).text(item.category),
+                    $.each(reactionConfig, function (i, item) {
+                        let { category, icon, requiresReflection } = item;
+                        let elem = $('<button>', { class: 'btn btn-outline-primary border-0 reactions', title: category })
+                            .attr({ 'data-paragraph-id': id, 'data-requires-reflection': requiresReflection, 'data-insight-category': category })
+                            .append(
+                                component.create().append(
+                                    $(icon).css({ height: '75px' }),
+                                    component.create('font-weight-500').css({ fontSize: 'medium' }).text(item.category),
+                                )
                             )
-                        )
 
                         iconElements.push(elem);
                     });
 
-                    return this.create('m-4').attr({'data-reaction-card': id}).css({display: 'none'})
+                    return this.create('m-4').attr({ 'data-reaction-card': id }).css({ display: 'none' })
                         .append(this.create('card-body p-2 d-flex justify-content-between').append(iconElements))
                 }
+            },
+            inputTitle: function (title, id) {
+                id = id || $that.unique();
+
+                return this.create('mb-3').append(
+                    $('<lable>', { class: 'form-label', for: id }).text('Enter title'),
+                    $('<input>', { class: 'form-control', id }).val(title)
+                )
+            },
+            inputImage: function (id) {
+                id = id || $that.unique();
+
+                return this.create('mb-3').append(
+                    $('<lable>', { class: 'form-label', for: id }).text('Enter Image URL'),
+                    $('<input>', { class: 'form-control', type:'file', id })
+                )
+            },
+            paragraphBlock(params = {}) {
+                console.log(params);
+                return this.create().append(
+                    this.create('col').append(
+                        this.inputTitle(params.title, params.id),
+                        this.inputImage( params.id)
+                    )
+                )
             }
         }
     }
@@ -552,7 +577,7 @@ class SocraticDialogue {
 
         // For previous and next navigations in a question paragraph
         $target.on('click', '[data-arrow]', function () {
-            const {arrowAction} = $(this).data();
+            const { arrowAction } = $(this).data();
             if (arrowAction == 'force-next' && !confirm('Are you sure to skip writing the reflection?')) {
                 return;
             }
@@ -562,8 +587,8 @@ class SocraticDialogue {
 
         // For insight spotter reactions
         $target.on('click', '[data-insight-category]', function () {
-            const {insightCategory, paragraphId, requiresReflection} = $(this).data();
-            
+            const { insightCategory, paragraphId, requiresReflection } = $(this).data();
+
             $that.requiresReflection = requiresReflection;
             $that.insightCategory = insightCategory;
 
@@ -576,9 +601,9 @@ class SocraticDialogue {
             }
         });
 
-        $target.on('click', '[data-spotter-icon]', function() {
+        $target.on('click', '[data-spotter-icon]', function () {
             let data = $(this).data();
-            let {paragraphId} = data;
+            let { paragraphId } = data;
 
             $.each($(this).parent().parent(), function (i, e) {
                 e = $(e).find('div.btn-inner');
@@ -594,7 +619,7 @@ class SocraticDialogue {
             )
         });
 
-        $target.on('keyup', '[data-reflection-area]', function() {
+        $target.on('keyup', '[data-reflection-area]', function () {
             let val = $(this).find('textarea').val();
             let id = $(this).data('reflection-area');
             let navElem = $target.find(`[data-ref-nav="${id}"] div.hidden-elem`);
@@ -606,15 +631,40 @@ class SocraticDialogue {
             }
         });
 
-        $target.on('click', '[data-force-prev]', function() {
-            let {paragraphId} = $(this).data();
+        $target.on('click', '[data-force-prev]', function () {
+            let { paragraphId } = $(this).data();
 
             $target.find(`[data-reaction-card="${paragraphId}"]`).hide();
             $target.find(`[data-reflection-area="${paragraphId}"]`).hide();
         });
     }
 
-    create(data = {}) {}
+    create(data = {}) {
+        
+        const components = this.components(),
+            $target = this.$builder,
+            paragraphContainerId = 'asset-paragraph-container-',
+            $that = this;
+
+        const { title, questionParagraphs, id } = data;
+        let paragraphHTML = [];
+
+        if (questionParagraphs && questionParagraphs.length) {
+            $.each(questionParagraphs, function(index, paragraph) {
+                let html = components.paragraphBlock(paragraph)
+
+                paragraphHTML.push(html);
+            });
+        }
+        else {
+            paragraphHTML = [components.paragraphBlock({})]
+        }
+
+        $target.append(
+            components.inputTitle(title, id),
+            paragraphHTML
+        )
+    }
 
     answer(data = {}) {
         const components = this.components(),
@@ -628,8 +678,8 @@ class SocraticDialogue {
         // $target.append(components.title(title));
 
         $target.append(
-            components.create('carousel slide', $that.carouselContainerId).attr('data-interval', false).css({position: 'initial'}).append(
-                components.create('carousel-inner d-flex').css({position: 'initial'}).attr('id', 'paragraph-inner')
+            components.create('carousel slide', $that.carouselContainerId).attr('data-interval', false).css({ position: 'initial' }).append(
+                components.create('carousel-inner d-flex').css({ position: 'initial' }).attr('id', 'paragraph-inner')
             )
         );
 
@@ -653,18 +703,18 @@ class SocraticDialogue {
 
             $target.find('#paragraph-inner').append(
                 components.create('container carousel-item mx-auto', paragraphContainerId + (index + 1), isActive ? 'active' : '')
-                .attr('sdlms-step', '').css({position: 'initial', fontSize: 'larger'}).append(
-                    components.image(image, id),
-                    components.navigationIcon(paragraph, 'prev'), questionElements, components.navigationIcon(paragraph, 'next'),
-                    components.reactionSection(paragraph), components.insightSpotter(paragraph)
-                )
+                    .attr('sdlms-step', '').css({ position: 'initial', fontSize: 'larger' }).append(
+                        components.image(image, id),
+                        components.navigationIcon(paragraph, 'prev'), questionElements, components.navigationIcon(paragraph, 'next'),
+                        components.reactionSection(paragraph), components.insightSpotter(paragraph)
+                    )
             )
 
         });
 
         if (typeof Stepper !== 'undefined') {
             this.stepper = new Stepper({
-                active: activeElemIndex, 
+                active: activeElemIndex,
                 target: $('#' + this.carouselContainerId).find('#paragraph-inner')
             });
         }
@@ -672,7 +722,7 @@ class SocraticDialogue {
         this.attachGlobalEvents();
     }
 
-    reader(data = {}) {}
+    reader(data = {}) { }
 
     getJSON() {
         return this.with;
