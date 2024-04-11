@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://dtthon-dev.deepthought.education/assets/styles.css">
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="code-asset"></div>
+    </div>
+  </body>
+  <script src="socraticDialogue.js"></script>
+  <script>
+    const assetData = {
+    "createdAt": "2024-03-09T06:27:46.537Z",
+    "id": 107,
+    "order": 4,
+    "questionParagraphs": [
+        {
+            "title": "Selection and Identification",
+            "image": "",
+            "questions": [
+                {
+                    "question": "How does JavaScript play hide-and-seek with elements on a webpage?",
+                    "id": "9ff47cb8-9a29-4183-856e-f58cc1fe4ae1",
+                    "isActive": true
+                },
+                {
+                    "question": "Can you imagine JavaScript as a detective in a Bollywood movie, searching for the elusive elements?",
+                    "id": "c2091fbe-50de-4748-9823-fab352c322ca"
+                },
+                {
+                    "question": "Why is mastering element selection like finding the perfect spice in a chaotic Indian spice bazaar?",
+                    "id": "ad41a457-9669-4293-9a6d-b7688bbf9dda"
+                },
+                {
+                    "question": "What's the funniest thing that could happen if JavaScript couldn't find the elements it's looking for?",
+                    "id": "8343ec96-eda4-47c1-8e13-bd4573ed9b23"
+                },
+                {
+                    "question": "How does understanding the DOM hierarchy feel like navigating through the winding lanes of an old Indian city?",
+                    "id": "9e7d07fa-528e-4c0b-9936-87d80c4a5cb4"
+                }
+            ],
+            "id": "a502fb9d-e46e-4f63-8f65-6c97ac2b1ca6",
+            "isActive": true
+        },
+        {
+            "title": "Creation and Insertion",
+            "image": "",
+            "questions": [
+                {
+                    "question": "How does JavaScript become the master chef whipping up new elements in the web kitchen?",
+                    "id": "150f9141-260b-46dc-8fc5-6d044be40b37"
+                },
+                {
+                    "question": "Can you picture JavaScript as the dabbawala, delivering fresh elements to a webpage like hot lunchboxes?",
+                    "id": "0eafa688-4990-4186-93b3-be057dbf13d0"
+                },
+                {
+                    "question": "Why is dynamic element creation like adding surprise ingredients to a traditional Indian dish?",
+                    "id": "e3a6638e-7559-4805-99fd-3db37155b6fe"
+                },
+                {
+                    "question": "What's the best analogy for seamlessly inserting new elements into a webpage â€“ is it like fitting puzzle pieces or adding toppings to a pizza?",
+                    "id": "ccbbbc6d-b754-442d-b9f5-c2ed07ae1b22"
+                },
+                {
+                    "question": "How does JavaScript ensure its new elements blend into the webpage like an undercover Bollywood spy?",
+                    "id": "e2269445-b6c6-4267-86af-53964146ce00"
+                }
+            ],
+            "id": "aa662edd-be04-4b29-9673-ea5e084f9a15"
+        },
+        {
+            "title": "Modification and Updating",
+            "image": "",
+            "questions": [
+                {
+                    "question": "How does JavaScript turn into a magician, transforming elements with a flick of its wand?",
+                    "id": "4c7a5b6d-3eb8-4ff0-8885-d73543f8febd"
+                },
+                {
+                    "question": "Can you imagine JavaScript as a Bollywood director, reshooting scenes to make the webpage blockbuster-worthy?",
+                    "id": "583e24d0-6412-4dd2-a901-860dd7e1436f"
+                },
+                {
+                    "question": "Why is real-time updating of elements like the dramatic plot twists in an Indian soap opera?",
+                    "id": "817fd050-5ae2-4cd2-b964-59e39e517717"
+                },
+                {
+                    "question": "What's the most hilarious outcome of JavaScript making a typo while updating element properties?",
+                    "id": "749f9935-86dd-4f74-b8c3-a8466ec8ce5d"
+                },
+                {
+                    "question": "How does JavaScript keep its cool amidst the chaos of modifying elements, like a Bollywood hero in a fight scene?",
+                    "id": "2d95060b-295d-48d9-9277-d5cce7819038"
+                }
+            ],
+            "id": "eedcd17a-1b3f-4ae7-8707-15b71e338c34"
+        },
+        {
+            "title": "Deletion and Removal",
+            "image": "",
+            "questions": [
+                {
+                    "question": "How does JavaScript become the ultimate decluttering guru, Marie Kondo-ing elements out of the DOM?",
+                    "id": "b89af31c-fbbf-4d51-b0a6-0e94c1bbdf33"
+                },
+                {
+                    "question": "Can you picture JavaScript as the superhero sweeping away unnecessary elements faster than a Mumbai street cleaner?",
+                    "id": "26dc26af-345c-4578-b526-37d61de24fdd"
+                },
+                {
+                    "question": "Why is element removal like cleaning out your cluttered WhatsApp messages to make room for new memes?",
+                    "id": "f230d56a-0539-4333-881e-80cbeffdf063"
+                },
+                {
+                    "question": "What's the funniest thing that could happen if JavaScript accidentally deleted the wrong element, like a mischievous monkey in the code jungle?",
+                    "id": "a8285222-3963-402b-beb4-bff8e9e67e7e"
+                },
+                {
+                    "question": "How does JavaScript ensure its element removal process is smoother than butter on a hot chapati?",
+                    "id": "bfed8a85-7dc4-4233-b9b3-fb6956b38232"
+                }
+            ],
+            "id": "46e1841f-3463-4025-a983-2c32ebdf7c01"
+        },
+        {
+            "title": "Integration and Application",
+            "image": "",
+            "questions": [
+                {
+                    "question": "How does JavaScript become the DJ mixing elements to create the ultimate party on a webpage?",
+                    "id": "c9f4e462-2b94-4264-91f6-a8ef78545068"
+                },
+                {
+                    "question": "Can you imagine JavaScript as the master puppeteer, orchestrating elements to dance to its tune like puppet dolls?",
+                    "id": "45d403b6-3ef1-4c4a-9741-3976529b9087"
+                },
+                {
+                    "question": "Why is understanding JavaScript like solving a riddle wrapped in an Indian mystery novel?",
+                    "id": "ce83708d-fcf6-4853-833d-f28c73334b0e"
+                },
+                {
+                    "question": "What's the most hilarious outcome of JavaScript going on strike and refusing to integrate elements, like a Bollywood actor demanding a higher paycheck?",
+                    "id": "c5a021d7-52d6-442a-ac88-83ff9ec75677"
+                },
+                {
+                    "question": "How does JavaScript keep the web development journey fun and exciting, like a rollercoaster ride through the streets of Mumbai?",
+                    "id": "a3a100df-a369-4ac6-a406-b6b05d4bdfa3"
+                }
+            ],
+            "id": "f503f4fe-eaef-43d9-856f-0c790e13fb5c"
+        }
+    ],
+    "title": "JavaScript: Unveiling the Magic of DOM Manipulation",
+    "type": "socraticDialogue",
+    "uid": 71,
+    "updatedAt": "2024-03-09T06:27:46.537Z"
+};
+
+    const reactions = [
+    {
+        "category": "Reflect",
+        "icon": "<img src=\"https://media.giphy.com/media/jqkipjwTMxNRgCKzad/giphy.gif?cid=790b7611q8h8bdz3606mg25v0tps5dm0mur4lqema4rov9ch&ep=v1_stickers_search&rid=giphy.gif&ct=e\"/>",
+        "requiresReflection": true
+    },
+    {
+        "category": "Bouncer",
+        "icon": "<img src=\"https://media.giphy.com/media/j4l0mCdcTFRyY4Bc5s/giphy.gif?cid=ecf05e47d97em2w2pnj2mpi6l014l4u4sy5z3px6xodya030&ep=v1_stickers_search&rid=giphy.gif&ct=e\"/>",
+        "requiresReflection": true
+    },
+    {
+        "category": "Wahooo!",
+        "icon": "<img src=\"https://media.giphy.com/media/j2NFnjcXwni0E9KcdI/giphy.gif?cid=790b7611hl9qg6kmuq8iihfibh4btq14p7fmio4vxn1fq9fb&ep=v1_stickers_search&rid=giphy.gif&ct=e\"/>",
+        "requiresReflection": true
+    },
+    {
+        "category": "Pass",
+        "icon": "<img src=\"https://media.giphy.com/media/SqYhwWASzIrjjq07u8/giphy.gif?cid=790b7611q8h8bdz3606mg25v0tps5dm0mur4lqema4rov9ch&ep=v1_stickers_search&rid=giphy.gif&ct=e\"/>",
+        "requiresReflection": false
+    }
+];
+
+    const insightSpotterReactions = [
+    {
+        "name": "Interdisciplinary",
+        "value": "interdisciplinary",
+        "icon": "🤝",
+        "description": "Interdisciplinary refers to the integration of knowledge and methods from multiple fields of study to solve complex problems",
+        "image": "image_url1"
+    },
+    {
+        "name": "Cross-functional",
+        "value": "crossfunctional",
+        "icon": "💼👥",
+        "description": "Cross-functional describes teams or individuals from different departments or areas of expertise working together towards a common goal",
+        "image": "image_url2"
+    },
+    {
+        "name": "Perspective",
+        "value": "perspective",
+        "icon": "❓",
+        "description": "Perspective is the manner in which a question is phrased or framed, which can influence the way people think about and respond to it",
+        "image": "image_url3"
+    },
+    {
+        "name": "Heuristic",
+        "value": "heuristic",
+        "icon": "🧠",
+        "description": "Heuristic refers to a problem-solving approach that involves using trial and error, experimentation, or practical experience rather than relying solely on theory",
+        "image": "image_url4"
+    },
+    {
+        "name": "First Principle",
+        "value": "firstprinciple",
+        "icon": "🔬",
+        "description": "First Principle involves breaking down a complex problem into its most basic, fundamental elements to arrive at a better understanding of its underlying principles",
+        "image": "image_url5"
+    },
+    {
+        "name": "Root of Thought",
+        "value": "rootofthought",
+        "icon": "💭",
+        "description": "Root of Thought refers to the underlying assumptions, beliefs, and values that shape how we think about and approach a particular issue or problem",
+        "image": "image_url6"
+    },
+    {
+        "name": "Comprehension",
+        "value": "comprehension",
+        "icon": "🔍",
+        "description": "Comprehension is the ability to understand, grasp, or comprehend the deeper meaning or significance of a problem, situation, or idea",
+        "image": "image_url7"
+    },
+    {
+        "name": "Mental modal",
+        "value": "mentalmodal",
+        "icon": "🌌",
+        "description": "A cognitive framework used to represent and interpret information about the world",
+        "image": "image_url8"
+    },
+    {
+        "name": "Extrapolation",
+        "value": "extrapolation",
+        "icon": "📈 ",
+        "description": "The act of estimating or predicting a value or trend based on existing data or information",
+        "image": "image_url9"
+    },
+    {
+        "name": "Logical Fallacy",
+        "value": "logicalfallacy",
+        "icon": "🚫",
+        "description": "An error in reasoning that undermines the validity of an argument or statement",
+        "image": "image_url10"
+    },
+    {
+        "name": "Creativity",
+        "value": "creativity",
+        "icon": "🎨",
+        "description": "Creativity is the ability to generate new ideas, concepts, or solutions that are original and valuable",
+        "image": "image_url11"
+    },
+    {
+        "name": "Critical Thinking",
+        "value": "criticalthinking",
+        "icon": "🤔",
+        "description": "Critical thinking is the ability to analyze and evaluate information objectively and make reasoned judgments or decisions",
+        "image": "image_url12"
+    }
+];
+
+    var _code = new SocraticDialogue({
+      target: "#code-asset",
+      action: "answer",
+      hideHeader: true,
+      spotterReactions: insightSpotterReactions,
+      reactionConfig: reactions,
+      with: assetData,
+    });
+  </script>
+</html>
