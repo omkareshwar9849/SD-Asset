@@ -374,6 +374,55 @@ class SocraticDialogue {
         $that.handleParagraphEndEvent();
     }
 
+    helpers() {
+        $.fn.serializeObject = function () {
+            var self = this,
+                json = {},
+                push_counters = {},
+                patterns = {
+                    "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                    "key": /[a-zA-Z0-9_]+|(?=\[\])/g,
+                    "push": /^$/,
+                    "fixed": /^\d+$/,
+                    "named": /^[a-zA-Z0-9_]+$/
+                };
+            this.build = function (base, key, value) {
+                base[key] = value;
+                return base;
+            };
+            this.push_counter = function (key) {
+                if (push_counters[key] === undefined) {
+                    push_counters[key] = 0;
+                }
+                return push_counters[key]++;
+            };
+            $.each($(this).serializeArray(), function () {
+                // Skip invalid keys
+                if (!patterns.validate.test(this.name)) {
+                    return;
+                }
+                var k,
+                    keys = this.name.match(patterns.key),
+                    merge = this.value,
+                    reverse_key = this.name;
+                while ((k = keys.pop()) !== undefined) {
+                    reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+                    if (k.match(patterns.push)) {
+                        merge = self.build([], self.push_counter(reverse_key), merge);
+                    }
+                    else if (k.match(patterns.fixed)) {
+                        merge = self.build([], k, merge);
+                    }
+                    else if (k.match(patterns.named)) {
+                        merge = self.build({}, k, merge);
+                    }
+                }
+                json = $.extend(true, json, merge);
+            });
+            return json;
+        };
+    }
+
     /**
      * @description Components required for the asset to function.
      */
@@ -520,45 +569,73 @@ class SocraticDialogue {
                         .append(this.create('card-body p-2 d-flex justify-content-between').append(iconElements))
                 }
             },
-            inputTitle: function (title, id) {
+            inputTitle: function (title, id, name) {
                 id = id || $that.unique();
 
                 return this.create('mb-3').append(
                     $('<lable>', { class: 'form-label', for: id }).text('Enter title'),
-                    $('<input>', { class: 'form-control', id }).val(title)
+                    $('<input>', { class: 'form-control', id: id, name: name }).val(title)
                 )
             },
-            inputImage: function (id) {
+            inputImage: function (imageUrl, id, name) {
                 id = id || $that.unique();
 
                 return this.create('mb-3').append(
                     $('<lable>', { class: 'form-label', for: id }).text('Enter Image URL'),
-                    $('<input>', { class: 'form-control', type:'file', id })
+                    $('<input>', { class: 'form-control', id: id, name: name }).val(imageUrl)
                 )
             },
-            question: function(question,id){
+            inputQuestion: function (question, id, name) {
                 id = id || $that.unique();
 
-                return this.create('mb-3').append(
-                    $('<lable>', { class: 'form-label', for: id }).text('Enter question'),
-                    $('<input>', { class: 'form-control', id }).val(question)
+                return this.create('mb-3 d-flex').append(
+                    $('<input>', { class: 'form-control', id, name:name }).val(question),
+                    $('<button>', { class: 'btn btn-danger', 'data-delete-id': id}).text('delete')
                 )
             },
-            quetionBlock(questions=[]){
-                
-                return questions.map(element => {
-                    console.log(element.question,element.id);
-                    return this.question(element.question,element.id);
-                });
-                
-            },
-            paragraphBlock(params = {}) {
+            questionsContainerButton: function (question, id) {
                 return this.create().append(
-                    this.create('col').append(
-                        this.inputTitle(params.title, params.id),
-                        this.inputImage( params.id),
-                        this.quetionBlock(params.questions)
+                    $('<div>', { class: 'new-question-block-container' }),
+                    $('<button>', { class: 'btn btn-primary', id: 'addQuestionParagraph' }).text('Add question Paragraph')
+
+                )
+            },
+            deleteQuestionParaButton: function (id) {
+                id = id || $that.unique();
+                return this.create().append(
+                    $('<button>', { class: 'btn btn-danger', 'delete-question-para-btn-id': id }).text('Delete Question Paragraph')
+                )
+            },
+            quetionBlock(questions=[], questionParaIndex) {
+                const dataBlockId = $that.unique();
+
+                if (!questions.length) {
+                    return this.create('questions').append(
+                        $('<h3>', { class: 'h3' }).text('Enter questions :'),
+                        $('<div>', { class: 'new-question-container' }),
+                        this.inputQuestion(),
+                        $('<button>', { class: 'btn btn-primary mb-2', 'add-button-id': dataBlockId }).text('Add Question')
                     )
+                }
+
+                return this.create('questions').append(
+                    $('<h3>', { class: 'h3' }).text('Enter questions :'),
+                    questions.map((element, index) => {
+                        return this.inputQuestion(element.question, element.id, `questionParagraphs[${questionParaIndex}][question][${index}]`)
+                    }),
+                    $('<div>', { class: 'new-question-container' }),
+                    $('<button>', { class: 'btn btn-primary mb-2', 'add-button-id': dataBlockId }).text('Add Question'),
+                );
+
+            },
+            paragraphBlock(index, paragraph) {
+                return this.create().append(
+                    this.create('col p-3 m-2').append(
+                        this.inputTitle(paragraph.title, paragraph.id, `questionParagraphs[${index}][title]`),
+                        this.inputImage(paragraph.image, paragraph.id, `questionParagraphs[${index}][image]`),
+                        this.quetionBlock(paragraph.questions,index),
+                        this.deleteQuestionParaButton(paragraph.id)
+                    ),
                 )
             }
         }
@@ -655,8 +732,40 @@ class SocraticDialogue {
         });
     }
 
+    attachGlobalCreateEvents() {
+        const $that = this;
+        const $target = $that.$builder, components = this.components(), helpers = this.helpers();
+
+        $target.on('click', '[data-delete-id]', function () {
+            $(this).parent().remove()
+        })
+
+        $target.on('click', '[add-button-id]', function () {
+            $(this).parent().find('.new-question-container').append(
+                components.inputQuestion()
+            )
+        })
+
+        $('#addQuestionParagraph').on('click', function () {
+            $(this).parent().find('.new-question-block-container').append(
+                components.paragraphBlock()
+            )
+        })
+
+        $('#sdAsset').on('submit', function (e) {
+            e.preventDefault();
+            console.log($(this).serializeObject());
+        })
+
+        $target.on('click', '[delete-question-para-btn-id]', function () {
+            $(this).parent().parent().remove();
+        })
+
+
+    }
+
     create(data = {}) {
-        
+
         const components = this.components(),
             $target = this.$builder,
             paragraphContainerId = 'asset-paragraph-container-',
@@ -666,20 +775,22 @@ class SocraticDialogue {
         let paragraphHTML = [];
 
         if (questionParagraphs && questionParagraphs.length) {
-            $.each(questionParagraphs, function(index, paragraph) {
-                let html = components.paragraphBlock(paragraph)
-
+            $.each(questionParagraphs, function (index, paragraph) {
+                let html = components.paragraphBlock(index, paragraph)
                 paragraphHTML.push(html);
             });
         }
         else {
-            paragraphHTML = [components.paragraphBlock({})]
+            paragraphHTML = [components.paragraphBlock({})];
         }
 
         $target.append(
-            components.inputTitle(title, id),
-            paragraphHTML
+            components.inputTitle(title, id, 'title'),
+            paragraphHTML,
+            components.questionsContainerButton()
+
         )
+        this.attachGlobalCreateEvents();
     }
 
     answer(data = {}) {

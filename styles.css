@@ -1,0 +1,16 @@
+.main-container{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 2px soild gray;
+}
+
+.col{
+    background-color: #E2E2E2;
+}
+
+.questions{
+    padding-left: 30px;
+}
+
+.btn-danger{
+    margin-left: 10px;
+}
